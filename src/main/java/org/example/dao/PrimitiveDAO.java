@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PrimitiveDAO extends DAOabstr<Object> {
     public PrimitiveDAO(String url, Properties dbProperties) {
-        super(dbProperties, url,
+        super(url, dbProperties,
                 new ScalarHandler<>(),
                 new MapHandler(),
                 new ColumnListHandler<>());
