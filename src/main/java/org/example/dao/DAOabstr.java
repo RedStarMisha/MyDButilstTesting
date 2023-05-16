@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public abstract class DAOabstr<T> implements DAO<T> {
     private QueryRunner runner = new QueryRunner();
-    private DBConnection dbConnection;
+    private final DBConnection dbConnection;
     private final ResultSetHandler<T> beanHandler;
     private final ResultSetHandler<Map<String, T>> mapHandler;
     private final ResultSetHandler<List<T>> listHandler;
