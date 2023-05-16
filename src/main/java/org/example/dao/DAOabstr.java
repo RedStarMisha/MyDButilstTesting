@@ -16,7 +16,7 @@ public abstract class DAOabstr<T> implements DAO<T> {
     private final ResultSetHandler<Map<String, T>> mapHandler;
     private final ResultSetHandler<List<T>> listHandler;
 
-    public DAOabstr(Properties dbProperties, String url, ResultSetHandler<T> beanHandler,
+    public DAOabstr(String url, Properties dbProperties, ResultSetHandler<T> beanHandler,
                     ResultSetHandler<Map<String, T>> mapHandler, ResultSetHandler<List<T>> listHandler) {
         this.beanHandler = beanHandler;
         this.mapHandler = mapHandler;

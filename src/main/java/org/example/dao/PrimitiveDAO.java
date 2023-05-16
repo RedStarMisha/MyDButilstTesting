@@ -7,7 +7,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.util.Properties;
 
 public class PrimitiveDAO extends DAOabstr<Object> {
-    public PrimitiveDAO(Properties dbProperties, String url) {
+    public PrimitiveDAO(String url, Properties dbProperties) {
         super(dbProperties, url,
                 new ScalarHandler<>(),
                 new MapHandler(),

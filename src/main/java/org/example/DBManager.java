@@ -13,21 +13,31 @@ public class DBManager {
      * Инициализация всех DAO из Properties файла
      * @param properties Properties файл с параметрами для подключения к БД
      */
-    public static void initFromProperties(Properties properties) {
+    public static void initDB(Properties properties) {
         String connection = (String) properties.remove("portaldb.Connection");
         String ip = (String) properties.remove("portaldb.IP");
         String dbName = (String) properties.remove("portaldb.Name");
-        primitiveDao = new PrimitiveDAO(properties, connection + "://" + ip + "/" + dbName);
-        aSigDao = new ASigDAOimpl(properties, connection + "://" + ip + "/" + dbName);
+        primitiveDao = new PrimitiveDAO(connection + "://" + ip + "/" + dbName, properties);
+        aSigDao = new ASigDAOimpl(connection + "://" + ip + "/" + dbName, properties);
     }
 
     /**
      * Инициадизация всех DAO по url
      * @param url для подключения к БД
      */
-    public static void initLocalDB(String url) {
+    public static void initDB(String url) {
         primitiveDao = new PrimitiveDAO(url);
         aSigDao = new ASigDAOimpl(url);
+    }
+
+    /**
+     * Инициадизация всех DAO по url и Properties файлу
+     * @param url для кодключения к БД
+     * @param properties
+     */
+    public static void initDB(String url, Properties properties) {
+        primitiveDao = new PrimitiveDAO(url, properties);
+        aSigDao = new ASigDAOimpl(url, properties);
     }
 
 

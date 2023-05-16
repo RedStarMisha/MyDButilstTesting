@@ -10,8 +10,8 @@ import java.util.Properties;
 
 public class ASigDAOimpl extends DAOabstr<AnaSig> {
 
-    public ASigDAOimpl(Properties dbProperties, String url) {
-        super(dbProperties, url,
+    public ASigDAOimpl(String url, Properties dbProperties) {
+        super(url, dbProperties,
                 new BeanHandler<>(AnaSig.class, new AnaSigRowProcessor()),
                 new BeanMapHandler<>(AnaSig.class, new AnaSigRowProcessor()),
                 new BeanListHandler<>(AnaSig.class, new AnaSigRowProcessor()));
