@@ -9,8 +9,13 @@ import java.util.Map;
 public class AnaSigRowProcessor extends BasicRowProcessor {
 
     public AnaSigRowProcessor() {
-        super(new AnaBeanProcessor(setColumnsToFieldsPair()));
+        super(new BeanProcessor(setColumnsToFieldsPair()));
     }
+
+    /**
+     * Метод для задания соответствия имени колонки БД именю поля класса
+     * @return
+     */
     private static Map<String, String> setColumnsToFieldsPair() {
         Map<String, String> pair = new HashMap<>();
         pair.put("PVID", "PVID");

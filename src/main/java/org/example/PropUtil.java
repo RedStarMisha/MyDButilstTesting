@@ -8,6 +8,11 @@ import java.util.Properties;
 public class PropUtil {
     private static Properties properties = new Properties();
 
+    /**
+     * Загрузить Properties из XML файла
+     * @param name
+     * @return
+     */
     public static Properties load(String name) {
         try {
             properties.loadFromXML(new FileInputStream(name));
@@ -17,11 +22,21 @@ public class PropUtil {
         }
     }
 
+    /**
+     * Добавить свойство в Properties файл
+     * @param key ключ
+     * @param value значение
+     */
     public static Properties addProp(String key, String value) {
         properties.setProperty(key, value);
         return properties;
     }
 
+    /**
+     * Получить Properties-файл для подключения к БД из общего на проект.
+     * Файл содержит все необходимые данные в том числе IP, имя БД, имя юзера, пароль, соединение, кодировку
+     * @return Properties файл с данными для подлкючения к БД
+     */
     public static Properties getDBProperties() {
         Properties properties1 = new Properties();
         try {
@@ -37,10 +52,23 @@ public class PropUtil {
         properties1.setProperty("characterEncoding", "UTF-8");
         return properties1;
     }
-
+    /**
+     * Добавить свойство в Properties файл для БД с ключом как есть
+     * @param key ключ в Properties фале на проект
+     * @param properties1 Properties файл для подключения к БД
+     * @throws Exception
+     */
     private static void addToBDProperties(String key, Properties properties1) throws Exception {
         properties1.setProperty(key, Optional.ofNullable(properties.getProperty(key)).orElseThrow(Exception::new));
     }
+
+    /**
+     * Добавить свойство в Properties файл для БД с новым именем ключа из общего на проект
+     * @param key ключ в Properties фале на проект
+     * @param properties1 Properties файл для подключения к БД
+     * @param newName новое имя для ключа в Properties файле для подключения к БД
+     * @throws Exception
+     */
     private static void addToBDProperties(String key, Properties properties1, String newName) throws Exception {
         properties1.setProperty(newName, Optional.ofNullable(properties.getProperty(key)).orElseThrow(Exception::new));
     }

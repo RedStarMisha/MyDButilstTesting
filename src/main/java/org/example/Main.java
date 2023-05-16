@@ -15,6 +15,9 @@ public class Main {
         doWithLocalDB();
     }
 
+    /**
+     *  Демонстрация подключения к БД на 10.222.60.10
+     */
     private static void doWithVoronejDB() {
         PropUtil.load("src/main/java/JPortal_ekp.config");
         PropUtil.addProp("characterEncoding", "UTF-8");
@@ -29,9 +32,11 @@ public class Main {
         System.out.println(GroupID + " " + CategoryMap);
     }
 
+    /**
+     * Демонстрация работы с локальной БД
+     */
     private static void doWithLocalDB() {
-        String db
-                = "jdbc:h2:mem:;INIT=runscript from 'src/main/java/schema.sql'";
+        String db = "jdbc:h2:mem:;INIT=runscript from 'src/main/java/schema.sql'";
         DBManager.initLocalDB(db);
         String sql3 = "SELECT PVID AS PVId, PVDESCRIPTION AS desc, DIMSTRING as unit" +
                 " FROM db";
