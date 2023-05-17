@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.BeanMapHandler;
@@ -8,16 +9,17 @@ import org.example.handlers.AnaSigRowProcessor;
 
 import java.util.Properties;
 
-public class ASigDAOimpl extends DAOabstr<AnaSig> {
+public class ASigRepository extends RepositoryBase<AnaSig> {
+    private static RowProcessor rowProcessor = new AnaSigRowProcessor();
 
-    public ASigDAOimpl(String url, Properties dbProperties) {
+    public ASigRepository(String url, Properties dbProperties) {
         super(url, dbProperties,
-                new BeanHandler<>(AnaSig.class, new AnaSigRowProcessor()),
-                new BeanMapHandler<>(AnaSig.class, new AnaSigRowProcessor()),
-                new BeanListHandler<>(AnaSig.class, new AnaSigRowProcessor()));
+                new BeanHandler<>(AnaSig.class, rowProcessor),
+                new BeanMapHandler<>(AnaSig.class, rowProcessor),
+                new BeanListHandler<>(AnaSig.class, rowProcessor));
     }
 
-    public ASigDAOimpl(String url) {
+    public ASigRepository(String url) {
         super(url, new BeanHandler<>(AnaSig.class, new AnaSigRowProcessor()),
                 new BeanMapHandler<>(AnaSig.class, new AnaSigRowProcessor()),
                 new BeanListHandler<>(AnaSig.class, new AnaSigRowProcessor()));

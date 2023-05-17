@@ -1,59 +1,59 @@
 package org.example;
 
-import org.example.dao.ASigDAOimpl;
-import org.example.dao.PrimitiveDAO;
+import org.example.dao.ASigRepository;
+import org.example.dao.PrimitiveRepository;
 
 import java.util.Properties;
 
 public class DBManager {
-    private static PrimitiveDAO primitiveDao;
-    private static ASigDAOimpl aSigDao;
+    private static PrimitiveRepository primitiveDao;
+    private static ASigRepository aSigDao;
 
     /**
-     * Инициализация всех DAO из Properties файла
+     * Инициализация всех Repository из Properties файла
      * @param properties Properties файл с параметрами для подключения к БД
      */
     public static void initDB(Properties properties) {
         String connection = (String) properties.remove("portaldb.Connection");
         String ip = (String) properties.remove("portaldb.IP");
         String dbName = (String) properties.remove("portaldb.Name");
-        primitiveDao = new PrimitiveDAO(connection + "://" + ip + "/" + dbName, properties);
-        aSigDao = new ASigDAOimpl(connection + "://" + ip + "/" + dbName, properties);
+        primitiveDao = new PrimitiveRepository(connection + "://" + ip + "/" + dbName, properties);
+        aSigDao = new ASigRepository(connection + "://" + ip + "/" + dbName, properties);
     }
 
     /**
-     * Инициадизация всех DAO по url
+     * Инициадизация всех Repository по url
      * @param url для подключения к БД
      */
     public static void initDB(String url) {
-        primitiveDao = new PrimitiveDAO(url);
-        aSigDao = new ASigDAOimpl(url);
+        primitiveDao = new PrimitiveRepository(url);
+        aSigDao = new ASigRepository(url);
     }
 
     /**
-     * Инициадизация всех DAO по url и Properties файлу
+     * Инициадизация всех Repository по url и Properties файлу
      * @param url для кодключения к БД
      * @param properties
      */
     public static void initDB(String url, Properties properties) {
-        primitiveDao = new PrimitiveDAO(url, properties);
-        aSigDao = new ASigDAOimpl(url, properties);
+        primitiveDao = new PrimitiveRepository(url, properties);
+        aSigDao = new ASigRepository(url, properties);
     }
 
 
     /**
-     * Вернуть DAO предназначенного для получения данных из БД представленных классом Object
+     * Вернуть Repository предназначенного для получения данных из БД представленных классом Object
      * @return
      */
-    public static PrimitiveDAO getPrimitiveDao() {
+    public static PrimitiveRepository getPrimitiveDao() {
         return primitiveDao;
     }
 
     /**
-     * Вернуть DAO предназначенного для получения данных из БД представленных классом AnaSig
+     * Вернуть Repository предназначенного для получения данных из БД представленных классом AnaSig
      * @return
      */
-    public static ASigDAOimpl getaSigDao() {
+    public static ASigRepository getaSigDao() {
         return aSigDao;
     }
 

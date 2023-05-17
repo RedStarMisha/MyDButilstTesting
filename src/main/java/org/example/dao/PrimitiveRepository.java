@@ -6,14 +6,17 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.util.Properties;
 
-public class PrimitiveDAO extends DAOabstr<Object> {
-    public PrimitiveDAO(String url, Properties dbProperties) {
+/**
+ * Репозиторий для работы с ячейками БД
+ */
+public class PrimitiveRepository extends RepositoryBase<Object> {
+    public PrimitiveRepository(String url, Properties dbProperties) {
         super(url, dbProperties,
                 new ScalarHandler<>(),
                 new MapHandler(),
                 new ColumnListHandler<>());
     }
-    public PrimitiveDAO(String url) {
+    public PrimitiveRepository(String url) {
         super(url, new ScalarHandler<>(), new MapHandler(), new ColumnListHandler<>());
     }
 

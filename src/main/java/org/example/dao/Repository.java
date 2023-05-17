@@ -3,7 +3,7 @@ package org.example.dao;
 import java.util.List;
 import java.util.Map;
 
-public interface DAO<T> {
+public interface Repository<T> {
     /**
      * Получить единичный объект
      * @param sql

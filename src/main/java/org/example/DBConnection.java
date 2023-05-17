@@ -12,7 +12,7 @@ public class DBConnection {
     private String url;
     private Connection connection;
 
-    public DBConnection(Properties dbProperties, String url) {
+    public DBConnection(String url, Properties dbProperties) {
         this.dbProperties = dbProperties;
         this.url = url;
     }

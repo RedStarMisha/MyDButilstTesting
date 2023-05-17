@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public abstract class DAOabstr<T> implements DAO<T> {
+public abstract class RepositoryBase<T> implements Repository<T> {
     private QueryRunner runner = new QueryRunner();
     private final DBConnection dbConnection;
     private final ResultSetHandler<T> beanHandler;
     private final ResultSetHandler<Map<String, T>> mapHandler;
     private final ResultSetHandler<List<T>> listHandler;
 
-    public DAOabstr(String url, Properties dbProperties, ResultSetHandler<T> beanHandler,
-                    ResultSetHandler<Map<String, T>> mapHandler, ResultSetHandler<List<T>> listHandler) {
+    public RepositoryBase(String url, Properties dbProperties, ResultSetHandler<T> beanHandler,
+                          ResultSetHandler<Map<String, T>> mapHandler, ResultSetHandler<List<T>> listHandler) {
         this.beanHandler = beanHandler;
         this.mapHandler = mapHandler;
         this.listHandler = listHandler;
-        dbConnection = new DBConnection(dbProperties, url);
+        dbConnection = new DBConnection(url, dbProperties);
     }
 
-    public DAOabstr(String url, ResultSetHandler<T> beanHandler,
-                    ResultSetHandler<Map<String, T>> mapHandler, ResultSetHandler<List<T>> listHandler) {
+    public RepositoryBase(String url, ResultSetHandler<T> beanHandler,
+                          ResultSetHandler<Map<String, T>> mapHandler, ResultSetHandler<List<T>> listHandler) {
         this.beanHandler = beanHandler;
         this.mapHandler = mapHandler;
         this.listHandler = listHandler;

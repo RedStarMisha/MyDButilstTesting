@@ -13,7 +13,7 @@ public class AnaSigRowProcessor extends BasicRowProcessor {
     }
 
     /**
-     * Метод для задания соответствия имени колонки БД именю поля класса
+     * Метод для задания соответствия имени колонки БД имени поля класса
      * @return
      */
     private static Map<String, String> setColumnsToFieldsPair() {
