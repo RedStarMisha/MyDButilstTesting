@@ -34,34 +34,24 @@ public abstract class RepositoryBase<T> implements Repository<T> {
 
     @Override
     public T execute(String sql) {
-        try {
-            return runner.query(dbConnection.openConnection(), sql, beanHandler);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            dbConnection.closeConnection();
-        }
+        return execute(sql, beanHandler);
     }
 
     @Override
     public Map<String, T> executeMap(String sql) {
-        try {
-            return runner.query(dbConnection.openConnection(), sql, mapHandler);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            dbConnection.closeConnection();
-        }
+        return execute(sql, mapHandler);
     }
 
     @Override
     public List<T> executeList(String sql) {
+        return execute(sql, listHandler);
+    }
+
+    private <T> T execute(String sql, ResultSetHandler<T> handler) {
         try {
-            return runner.query(dbConnection.openConnection(), sql, listHandler);
+            return runner.query(dbConnection.openConnection(), sql, handler);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            dbConnection.closeConnection();
         }
     }
 }
