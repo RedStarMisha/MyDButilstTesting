@@ -15,10 +15,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 
 /**
  * BeanProcessor позволяющий сохранять default значения полей
@@ -37,6 +34,23 @@ public class MyBeanProcessor extends BeanProcessor {
         ResultSetMetaData rsmd = rs.getMetaData();
         int[] columnToProperty = this.mapColumnsToProperties(rsmd, props);
         return this.populateBean(rs, bean, props, columnToProperty);
+    }
+    @Override
+    public <T> List<T> toBeanList(ResultSet rs, Class<? extends T> type) throws SQLException {
+        List<T> results = new ArrayList();
+        if (!rs.next()) {
+            return results;
+        } else {
+            PropertyDescriptor[] props = this.propertyDescriptors(type);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int[] columnToProperty = this.mapColumnsToProperties(rsmd, props);
+
+            do {
+                results.add(this.createBean(rs, type, props, columnToProperty));
+            } while(rs.next());
+
+            return results;
+        }
     }
 
     protected  <T> T createBean(ResultSet rs, Class<T> type, PropertyDescriptor[] props, int[] columnToProperty) throws SQLException {
@@ -72,7 +86,6 @@ public class MyBeanProcessor extends BeanProcessor {
                 this.callSetter(bean, prop, value);
             }
         }
-
         return bean;
     }
 
@@ -156,5 +169,4 @@ public class MyBeanProcessor extends BeanProcessor {
         primitiveDefaults.put(Boolean.TYPE, Boolean.FALSE);
         primitiveDefaults.put(Character.TYPE, '\u0000');
     }
-
 }

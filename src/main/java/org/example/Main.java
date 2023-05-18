@@ -40,9 +40,9 @@ public class Main {
         DBManager.initDB(db);
         String sql3 = "SELECT PVID AS PVId, PVDESCRIPTION AS desc, DIMSTRING as unit" +
                 " FROM db";
-        List<AnaSig> list = DBManager.getaSigDao().executeList(sql3);
         Map<String, AnaSig> map = DBManager.getaSigDao().executeMap(sql3);
         System.out.println(map);
+        List<AnaSig> list = DBManager.getaSigDao().executeList(sql3);
         System.out.println(list);
     }
 }

@@ -8,8 +8,12 @@ import java.util.Map;
 public class BeanProcessFactory {
     public static BeanProcessor makeProcessor(BeanProccessType type, Map<String, String> pair) {
         switch (type){
-            case STANDART -> new BeanProcessor(pair);
-            case SAVE_DEFAULT -> new MyBeanProcessor(pair);
+            case STANDART -> {
+                return new BeanProcessor(pair);
+            }
+            case SAVE_DEFAULT -> {
+                return new MyBeanProcessor(pair);
+            }
         }
         return null;
     }

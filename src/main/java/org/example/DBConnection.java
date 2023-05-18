@@ -23,8 +23,9 @@ public class DBConnection {
 
     public Connection openConnection() {
         try {
-            return connection = dbProperties == null ? DriverManager.getConnection(url) :
+            connection = dbProperties == null ? DriverManager.getConnection(url) :
                     DriverManager.getConnection(url, dbProperties);
+            return connection;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

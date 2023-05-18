@@ -6,11 +6,12 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.BeanMapHandler;
 import org.example.entity.AnaSig;
 import org.example.handlers.AnaSigRowProcessor;
+import org.example.handlers.processfactory.BeanProccessType;
 
 import java.util.Properties;
 
 public class ASigRepository extends RepositoryBase<AnaSig> {
-    private static RowProcessor rowProcessor = new AnaSigRowProcessor();
+    private static RowProcessor rowProcessor = new AnaSigRowProcessor(BeanProccessType.SAVE_DEFAULT);
 
     public ASigRepository(String url, Properties dbProperties) {
         super(url, dbProperties,
@@ -20,8 +21,8 @@ public class ASigRepository extends RepositoryBase<AnaSig> {
     }
 
     public ASigRepository(String url) {
-        super(url, new BeanHandler<>(AnaSig.class, new AnaSigRowProcessor()),
-                new BeanMapHandler<>(AnaSig.class, new AnaSigRowProcessor()),
-                new BeanListHandler<>(AnaSig.class, new AnaSigRowProcessor()));
+        super(url, new BeanHandler<>(AnaSig.class, rowProcessor),
+                new BeanMapHandler<>(AnaSig.class, rowProcessor),
+                new BeanListHandler<>(AnaSig.class, rowProcessor));
     }
 }
