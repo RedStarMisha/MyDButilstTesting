@@ -52,6 +52,8 @@ public abstract class RepositoryBase<T> implements Repository<T> {
             return runner.query(dbConnection.openConnection(), sql, handler);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            dbConnection.closeConnection();
         }
     }
 }

@@ -16,14 +16,15 @@ public class DBConnection {
         this.dbProperties = dbProperties;
         this.url = url;
     }
+
     public DBConnection(String url) {
         this.url = url;
     }
 
     public Connection openConnection() {
         try {
-            connection = dbProperties == null ? DriverManager.getConnection(url) : DriverManager.getConnection(url, dbProperties);
-            return connection;
+            return connection = dbProperties == null ? DriverManager.getConnection(url) :
+                    DriverManager.getConnection(url, dbProperties);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
