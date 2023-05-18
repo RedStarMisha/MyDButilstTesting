@@ -1,4 +1,4 @@
-package org.example.dao;
+package org.example.repositories;
 
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;

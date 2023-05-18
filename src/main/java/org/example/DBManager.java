@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.dao.ASigRepository;
-import org.example.dao.PrimitiveRepository;
+import org.example.repositories.ASigRepository;
+import org.example.repositories.PrimitiveRepository;
 
 import java.util.Properties;
 

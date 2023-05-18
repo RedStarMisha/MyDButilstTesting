@@ -1,7 +1,8 @@
 package org.example.handlers;
 
 import org.apache.commons.dbutils.BasicRowProcessor;
-import org.apache.commons.dbutils.BeanProcessor;
+import org.example.handlers.processfactory.BeanProccessType;
+import org.example.handlers.processfactory.BeanProcessFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,11 @@ import java.util.Map;
 public class AnaSigRowProcessor extends BasicRowProcessor {
 
     public AnaSigRowProcessor() {
-        super(new BeanProcessor(setColumnsToFieldsPair()));
+        super(BeanProcessFactory.makeProcessor(BeanProccessType.STANDART, setColumnsToFieldsPair()));
+    }
+
+    public AnaSigRowProcessor(BeanProccessType type) {
+        super(BeanProcessFactory.makeProcessor(type, setColumnsToFieldsPair()));
     }
 
     /**
@@ -36,7 +41,6 @@ public class AnaSigRowProcessor extends BasicRowProcessor {
         pair.put("pvnr", "PVNr");
         pair.put("PVCATEGORIES", "PVCategories");
         pair.put("PLC_ITEMID", "PLC_ITEMID");
-        //pair.put("sigsys", "StationId");
         pair.put("categorytext", "CATEGORYTEXT");
         pair.put("CategoryNr", "CategoryNr");
         return pair;

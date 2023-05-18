@@ -1,4 +1,4 @@
-package org.example.dao;
+package org.example.repositories;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;

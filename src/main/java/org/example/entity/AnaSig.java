@@ -1,11 +1,15 @@
 package org.example.entity;
 
+import org.example.annotation.Default;
+import org.example.annotation.DefaultType;
+
 public class AnaSig {
     private String PVID;
     /**
      * Описание сигнала
      */
-    private String PVDescription;
+    @Default(key = DefaultType.IFNULL)
+    private String PVDescription = "desc";
     /**
      * Единицы измерения
      */

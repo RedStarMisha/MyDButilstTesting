@@ -5,5 +5,5 @@ CREATE TABLE db(
 );
 
 INSERT INTO db (PVID, PVDESCRIPTION, DIMSTRING)
-  VALUES ('KKS1', 'cxxx', 'asdasd'),
+  VALUES ('KKS1', null, 'asdasd'),
  ('KKS2', 'asas', 'ccc');
