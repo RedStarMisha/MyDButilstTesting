@@ -5,13 +5,12 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.BeanMapHandler;
 import org.example.entity.AnaSig;
-import org.example.handlers.AnaSigRowProcessor;
-import org.example.handlers.processfactory.BeanProccessType;
+import org.example.handlers.rowprocessors.AnaSigRowProcessor;
 
 import java.util.Properties;
 
 public class ASigRepository extends RepositoryBase<AnaSig> {
-    private static RowProcessor rowProcessor = new AnaSigRowProcessor(BeanProccessType.SAVE_DEFAULT);
+    private static RowProcessor rowProcessor = new AnaSigRowProcessor();
 
     public ASigRepository(String url, Properties dbProperties) {
         super(url, dbProperties,

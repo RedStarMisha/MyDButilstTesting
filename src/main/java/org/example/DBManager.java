@@ -1,13 +1,16 @@
 package org.example;
 
 import org.example.repositories.ASigRepository;
+import org.example.repositories.BSigRepository;
 import org.example.repositories.PrimitiveRepository;
 
 import java.util.Properties;
 
 public class DBManager {
     private static PrimitiveRepository primitiveDao;
-    private static ASigRepository aSigDao;
+    private static ASigRepository aSigRepository;
+
+    private static BSigRepository bSigRepository;
 
     /**
      * Инициализация всех Repository из Properties файла
@@ -18,7 +21,8 @@ public class DBManager {
         String ip = (String) properties.remove("portaldb.IP");
         String dbName = (String) properties.remove("portaldb.Name");
         primitiveDao = new PrimitiveRepository(connection + "://" + ip + "/" + dbName, properties);
-        aSigDao = new ASigRepository(connection + "://" + ip + "/" + dbName, properties);
+        aSigRepository = new ASigRepository(connection + "://" + ip + "/" + dbName, properties);
+        bSigRepository = new BSigRepository(connection + "://" + ip + "/" + dbName, properties);
     }
 
     /**
@@ -27,7 +31,7 @@ public class DBManager {
      */
     public static void initDB(String url) {
         primitiveDao = new PrimitiveRepository(url);
-        aSigDao = new ASigRepository(url);
+        aSigRepository = new ASigRepository(url);
     }
 
     /**
@@ -37,7 +41,7 @@ public class DBManager {
      */
     public static void initDB(String url, Properties properties) {
         primitiveDao = new PrimitiveRepository(url, properties);
-        aSigDao = new ASigRepository(url, properties);
+        aSigRepository = new ASigRepository(url, properties);
     }
 
 
@@ -53,8 +57,11 @@ public class DBManager {
      * Вернуть Repository предназначенного для получения данных из БД представленных классом AnaSig
      * @return
      */
-    public static ASigRepository getaSigDao() {
-        return aSigDao;
+    public static ASigRepository getaSigRepository() {
+        return aSigRepository;
     }
 
+    public static BSigRepository getbSigRepository() {
+        return bSigRepository;
+    }
 }

@@ -8,7 +8,7 @@ public class AnaSig {
     /**
      * Описание сигнала
      */
-    @Default(key = DefaultType.IFNULL)
+    @Default(key = DefaultType.IFNULL) // Аннотация в данном случае указывает на то, что будет сохранено значение по умолчанию в случае если ячейка в бд будет null
     private String PVDescription = "desc";
     /**
      * Единицы измерения
