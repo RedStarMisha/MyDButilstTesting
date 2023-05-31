@@ -1,9 +1,9 @@
-package org.example.handlers;
+package ru.get.db_date_handler.handlers;
 
 import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.PropertyHandler;
-import org.example.annotation.Default;
-import org.example.annotation.DefaultType;
+import ru.get.db_date_handler.annotation.Default;
+import ru.get.db_date_handler.annotation.DefaultType;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -22,10 +22,14 @@ import java.util.*;
  */
 public class MyBeanProcessor extends BeanProcessor {
     private static final Map<Class<?>, Object> primitiveDefaults = new HashMap();
+
     private static final ServiceLoader<PropertyHandler> propertyHandlers = ServiceLoader.load(PropertyHandler.class);
 
     public MyBeanProcessor(Map<String, String> columnToPropertyOverrides) {
-        super(columnToPropertyOverrides);
+        super(columnToPropertyOverrides == null ? new HashMap<>() : columnToPropertyOverrides);
+    }
+
+    public MyBeanProcessor() {
     }
 
     @Override
@@ -37,7 +41,7 @@ public class MyBeanProcessor extends BeanProcessor {
     }
     @Override
     public <T> List<T> toBeanList(ResultSet rs, Class<? extends T> type) throws SQLException {
-        List<T> results = new ArrayList();
+        List<T> results = new ArrayList<>();
         if (!rs.next()) {
             return results;
         } else {

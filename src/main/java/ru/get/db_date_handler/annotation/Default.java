@@ -1,4 +1,4 @@
-package org.example.annotation;
+package ru.get.db_date_handler.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD) //к какому уровню будет применяться аннотация:класс, поле, метод и т.д.
 public @interface Default {
 //    public String key() default "";
-    DefaultType key() default DefaultType.ALWAYS;
+    DefaultType key() default DefaultType.NONE;
 }

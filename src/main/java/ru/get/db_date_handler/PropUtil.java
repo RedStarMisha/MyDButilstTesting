@@ -1,4 +1,4 @@
-package org.example;
+package ru.get.db_date_handler;
 
 import java.io.FileInputStream;
 import java.io.IOException;

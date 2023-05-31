@@ -1,7 +1,4 @@
-package org.example.entity;
-
-import org.example.annotation.Default;
-import org.example.annotation.DefaultType;
+package ru.get.db_date_handler.entity;
 
 public class BinSig {
     private String PVID;
@@ -132,5 +129,14 @@ public class BinSig {
 
     public void setAlarmProcessing(short alarmProcessing) {
         AlarmProcessing = alarmProcessing;
+    }
+
+    @Override
+    public String toString() {
+        return "BinSig{" +
+                "PVID='" + PVID + '\'' +
+                ", binValueNr=" + binValueNr +
+                ", PVDescription='" + PVDescription + '\'' +
+                '}';
     }
 }

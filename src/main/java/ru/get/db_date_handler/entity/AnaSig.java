@@ -1,15 +1,11 @@
-package org.example.entity;
-
-import org.example.annotation.Default;
-import org.example.annotation.DefaultType;
+package ru.get.db_date_handler.entity;
 
 public class AnaSig {
     private String PVID;
     /**
      * Описание сигнала
      */
-    @Default(key = DefaultType.IFNULL) // Аннотация в данном случае указывает на то, что будет сохранено значение по умолчанию в случае если ячейка в бд будет null
-    private String PVDescription = "desc";
+    private String PVDescription;
     /**
      * Единицы измерения
      */
@@ -207,30 +203,5 @@ public class AnaSig {
 
     public void setCategoryNr(int categoryNr) {
         CategoryNr = categoryNr;
-    }
-
-    @Override
-    public String toString() {
-        return "AnaSig{" +
-                "PVID='" + PVID + '\'' +
-                ", PVDescription='" + PVDescription + '\'' +
-                ", DimString='" + DimString + '\'' +
-                ", RoundDigits=" + RoundDigits +
-                ", RangeLow=" + RangeLow +
-                ", RangeHigh=" + RangeHigh +
-                ", BoundsLow1=" + BoundsLow1 +
-                ", BoundsLow2=" + BoundsLow2 +
-                ", BoundsLow3=" + BoundsLow3 +
-                ", BoundsHigh1=" + BoundsHigh1 +
-                ", BoundsHigh2=" + BoundsHigh2 +
-                ", BoundsHigh3=" + BoundsHigh3 +
-                ", PARENTSTATIONID='" + PARENTSTATIONID + '\'' +
-                ", STATIONID='" + STATIONID + '\'' +
-                ", DeadBand=" + DeadBand +
-                ", PVCategories=" + PVCategories +
-                ", PLC_ITEMID='" + PLC_ITEMID + '\'' +
-                ", CATEGORYTEXT='" + CATEGORYTEXT + '\'' +
-                ", CategoryNr=" + CategoryNr +
-                '}';
     }
 }

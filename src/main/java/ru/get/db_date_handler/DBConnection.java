@@ -1,4 +1,4 @@
-package org.example;
+package ru.get.db_date_handler;
 
 import org.apache.commons.dbutils.DbUtils;
 
@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DBConnection {
     private Properties dbProperties;
-    private String url;
+    private final String url;
     private Connection connection;
 
     public DBConnection(String url, Properties dbProperties) {
@@ -29,6 +29,10 @@ public class DBConnection {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Connection getConnection() {
+        return connection != null ? connection : openConnection();
     }
 
     public void closeConnection() {
