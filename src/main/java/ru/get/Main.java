@@ -3,7 +3,6 @@ package ru.get;
 import ru.get.db_date_handler.DBManager;
 import ru.get.db_date_handler.PropUtil;
 import ru.get.db_date_handler.columbtofiled.ColumnToFieldFactory;
-import ru.get.db_date_handler.entity.AnaSig;
 import ru.get.db_date_handler.entity.BinSig;
 import ru.get.db_date_handler.repositories.Repository;
 
@@ -24,7 +23,7 @@ public class Main {
         PropUtil.load("src/main/java/JPortal_ekp.config");
         PropUtil.addProp("characterEncoding", "UTF-8");
         DBManager.initDB(PropUtil.getDBProperties());
-        DBManager.setColumnToField(new ColumnToFieldFactory());
+        DBManager.matchColumnToField(new ColumnToFieldFactory());
         getPrimitive();
         getBinSignal();
     }

@@ -45,7 +45,6 @@ public class PropUtil {
             addToBDProperties("portaldb.User", properties1, "user");
             addToBDProperties("portaldb.Password", properties1, "password");
             addToBDProperties("portaldb.Connection", properties1);
-//            addToBDProperties("portaldb.Driver", properties1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

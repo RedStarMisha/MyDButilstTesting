@@ -18,7 +18,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * BeanProcessor позволяющий сохранять default значения полей
+ * BeanProcessor для маппинга данных из БД отличающийся от стандартного тем, что
+ * позволяет сохранять default значения полей
  */
 public class MyBeanProcessor extends BeanProcessor {
     private static final Map<Class<?>, Object> primitiveDefaults = new HashMap();

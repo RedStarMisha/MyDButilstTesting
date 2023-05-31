@@ -5,6 +5,9 @@ import ru.get.db_date_handler.repositories.*;
 
 import java.util.Properties;
 
+/**
+ * БД менеджер. Инициализирует соединение с БД, позвращает репозитории для получения Entity из БД
+ */
 public class DBManager {
     private static DBConnection connection;
     private static ColumnToField columnToField;
@@ -13,7 +16,7 @@ public class DBManager {
      * Задать класс отвечающий за связывание имени колоники в БД с именем поля entity
      * @param columnToField
      */
-    public static void setColumnToField(ColumnToField columnToField) {
+    public static void matchColumnToField(ColumnToField columnToField) {
         DBManager.columnToField = columnToField;
     }
 
@@ -50,8 +53,10 @@ public class DBManager {
     }
 
     /**
-     * Вернуть Repository предназначенного для получения данных из БД представленных классом
-     * @return
+     * Вернуть Repository предназначенного для получения данных из БД представленных Entity
+     * @param clazz класс Entity
+     * @return репозиторий для получения Entity из БД
+     * @param <T>
      */
     public static <T>Repository getRepository(Class<T> clazz) {
         return new EntityRepository<>(connection, clazz, columnToField.getMatching(clazz));

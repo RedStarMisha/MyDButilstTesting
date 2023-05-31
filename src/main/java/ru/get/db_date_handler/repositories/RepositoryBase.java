@@ -64,6 +64,13 @@ public abstract class RepositoryBase<T> implements Repository<T> {
         return null;
     }
 
+    /**
+     * ВВыполнить sql запрос к КБ и оставить соединение открытым
+     * @param sql запрос к БД
+     * @param handler обработчик результатов запроса
+     * @return
+     * @param <T>
+     */
     protected  <T> T execute(String sql, ResultSetHandler<T> handler) {
         try {
             return runner.query(dbConnection.getConnection(), sql, handler);
@@ -72,6 +79,13 @@ public abstract class RepositoryBase<T> implements Repository<T> {
         }
     }
 
+    /**
+     * Выполнить sql запрос к КБ и после этого закрыть соединение
+     * @param sql запрос к БД
+     * @param handler обработчик результатов запроса
+     * @return
+     * @param <T>
+     */
     protected  <T> T executeClosable(String sql, ResultSetHandler<T> handler) {
         T result = execute(sql, handler);
         dbConnection.closeConnection();

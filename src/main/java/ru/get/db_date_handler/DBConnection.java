@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Класс коннектор к БД
+ */
 public class DBConnection {
     private Properties dbProperties;
     private final String url;
