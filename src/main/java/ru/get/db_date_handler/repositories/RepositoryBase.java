@@ -65,7 +65,7 @@ public abstract class RepositoryBase<T> implements Repository<T> {
     }
 
     /**
-     * ВВыполнить sql запрос к КБ и оставить соединение открытым
+     * Выполнить sql запрос к КБ и оставить соединение открытым
      * @param sql запрос к БД
      * @param handler обработчик результатов запроса
      * @return

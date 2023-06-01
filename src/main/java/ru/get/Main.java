@@ -34,8 +34,8 @@ public class Main {
 //        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.USERID='" + UserID + "'";
         String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.GROUPID <> 'ADMINISTRATORS'";
 
-        String GroupID = (String) DBManager.getRepository().getValByColumn (sql, "GROUPID");
-        int CategoryMap =(Integer) DBManager.getRepository().getValByColumn (sql,"CATEGORYMAP");
+        String GroupID = DBManager.getRepository().getString (sql, "GROUPID");
+        int CategoryMap = DBManager.getRepository().getInt (sql,"CATEGORYMAP");
         System.out.println(GroupID + " " + CategoryMap);
     }
 
