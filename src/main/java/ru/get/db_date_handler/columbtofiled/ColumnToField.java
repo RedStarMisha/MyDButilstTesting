@@ -19,4 +19,8 @@ public abstract class ColumnToField {
     public static Map<String, String> getMatching(Class clazz) {
         return matcher.get(clazz);
     }
+
+    public static void addMatching(Class clazz, Map<String, String> map) {
+        matcher.put(clazz, map);
+    }
 }

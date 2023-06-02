@@ -6,6 +6,8 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import ru.get.db_date_handler.DBConnection;
 
+import java.sql.SQLException;
+
 
 /**
  * Репозиторий для работы с ячейками БД
@@ -25,7 +27,7 @@ public class PrimitiveRepository extends RepositoryBase<Object> {
      * @param columnName имя колонки по которой будет извлекаться значение строки
      * @return значение искомой ячейки
      */
-    private Object getValByColumn(String sql, String columnName) {
+    private Object getValByColumn(String sql, String columnName) throws SQLException {
         return executeMap(sql).get(columnName);
     }
 

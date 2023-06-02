@@ -50,7 +50,12 @@ public class Main {
                 + "LEFT OUTER JOIN `pls_proc_categories` ON `pls_proc_categories`.`CATEGORYNR` = `pls_bin_conf`.`PROCCATNR` "
                 + "ORDER BY `pls_station`.`STATIONID` LIMIT 20;";
         Repository<BinSig> rep = DBManager.getRepository(BinSig.class);
-        Map<String, BinSig> binSigMap = rep.executeMap(sql);
+        Map<String, BinSig> binSigMap = null;
+        try {
+            binSigMap = rep.executeMap(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         int i=0;
         for (Map.Entry<String, BinSig> entry : binSigMap.entrySet()) {
             System.out.println("key - " + entry.getKey());
@@ -60,7 +65,12 @@ public class Main {
             }
         }
         i=0;
-        List<BinSig> binSigList = rep.executeList(sql);
+        List<BinSig> binSigList = null;
+        try {
+            binSigList = rep.executeList(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         for (BinSig sig : binSigList) {
             System.out.println(sig);
             i++;

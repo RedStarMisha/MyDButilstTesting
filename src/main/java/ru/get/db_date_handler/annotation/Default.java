@@ -15,6 +15,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME) // область действия аннотации
 @Target(ElementType.FIELD) //к какому уровню будет применяться аннотация:класс, поле, метод и т.д.
 public @interface Default {
-//    public String key() default "";
     DefaultType key() default DefaultType.NONE;
 }

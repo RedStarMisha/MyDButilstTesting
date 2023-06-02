@@ -38,17 +38,17 @@ public abstract class RepositoryBase<T> implements Repository<T> {
     }
 
     @Override
-    public T execute(String sql) {
+    public T execute(String sql) throws SQLException {
         return execute(sql, beanHandler);
     }
 
     @Override
-    public Map<String, T> executeMap(String sql) {
+    public Map<String, T> executeMap(String sql) throws SQLException {
         return execute(sql, mapHandler);
     }
 
     @Override
-    public List<T> executeList(String sql) {
+    public List<T> executeList(String sql) throws SQLException {
         return execute(sql, listHandler);
     }
 
@@ -71,12 +71,8 @@ public abstract class RepositoryBase<T> implements Repository<T> {
      * @return
      * @param <T>
      */
-    protected  <T> T execute(String sql, ResultSetHandler<T> handler) {
-        try {
-            return runner.query(dbConnection.getConnection(), sql, handler);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    protected  <T> T execute(String sql, ResultSetHandler<T> handler) throws SQLException {
+        return runner.query(dbConnection.getConnection(), sql, handler);
     }
 
     /**
@@ -86,7 +82,7 @@ public abstract class RepositoryBase<T> implements Repository<T> {
      * @return
      * @param <T>
      */
-    protected  <T> T executeClosable(String sql, ResultSetHandler<T> handler) {
+    protected  <T> T executeClosable(String sql, ResultSetHandler<T> handler) throws SQLException {
         T result = execute(sql, handler);
         dbConnection.closeConnection();
         return result;

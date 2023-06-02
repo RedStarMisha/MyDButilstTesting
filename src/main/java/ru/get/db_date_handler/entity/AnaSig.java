@@ -2,10 +2,12 @@ package ru.get.db_date_handler.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.get.db_date_handler.annotation.ColumnName;
 
 @Getter
 @Setter
 public class AnaSig {
+    @ColumnName(key = "pvid")
     private String PVID;
     /**
      * Описание сигнала

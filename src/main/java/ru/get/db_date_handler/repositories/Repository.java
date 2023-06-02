@@ -1,5 +1,6 @@
 package ru.get.db_date_handler.repositories;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public interface Repository<T> {
      * @param sql
      * @return
      */
-    T execute(String sql);
+    T execute(String sql) throws SQLException;
 
     /**
      * Получить Map<String, T> обектов. В случае если T - сущность, то результаты будут представлены в виде пар: id в БД - сущность.
@@ -18,12 +19,12 @@ public interface Repository<T> {
      * @param sql запрос в БД
      * @return Map<String, T> для сущностей в формате id - entity, в остальных случаях в формате columnName - value
      */
-    Map<String, T> executeMap(String sql);
+    Map<String, T> executeMap(String sql) throws SQLException;
 
     /**
      * Получить список объектов
      * @param sql
      * @return
      */
-    List<T> executeList(String sql);
+    List<T> executeList(String sql) throws SQLException;
 }

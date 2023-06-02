@@ -2,6 +2,7 @@ package ru.get.db_date_handler.handlers;
 
 import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.PropertyHandler;
+import ru.get.db_date_handler.annotation.ColumnName;
 import ru.get.db_date_handler.annotation.Default;
 import ru.get.db_date_handler.annotation.DefaultType;
 
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * BeanProcessor для маппинга данных из БД отличающийся от стандартного тем, что
@@ -25,19 +27,23 @@ public class MyBeanProcessor extends BeanProcessor {
     private static final Map<Class<?>, Object> primitiveDefaults = new HashMap();
 
     private static final ServiceLoader<PropertyHandler> propertyHandlers = ServiceLoader.load(PropertyHandler.class);
+    protected final Map<String, String> columnToPropertyOverrides;
+
 
     public MyBeanProcessor(Map<String, String> columnToPropertyOverrides) {
-        super(columnToPropertyOverrides == null ? new HashMap<>() : columnToPropertyOverrides);
+        super();
+        this.columnToPropertyOverrides =  columnToPropertyOverrides;
     }
 
     public MyBeanProcessor() {
+        this.columnToPropertyOverrides = null;
     }
 
     @Override
     public <T> T populateBean(ResultSet rs, T bean) throws SQLException {
         PropertyDescriptor[] props = this.propertyDescriptors(bean.getClass());
         ResultSetMetaData rsmd = rs.getMetaData();
-        int[] columnToProperty = this.mapColumnsToProperties(rsmd, props);
+        int[] columnToProperty = this.mapColumnsToProperties(rsmd, props, bean.getClass());
         return this.populateBean(rs, bean, props, columnToProperty);
     }
     @Override
@@ -48,7 +54,7 @@ public class MyBeanProcessor extends BeanProcessor {
         } else {
             PropertyDescriptor[] props = this.propertyDescriptors(type);
             ResultSetMetaData rsmd = rs.getMetaData();
-            int[] columnToProperty = this.mapColumnsToProperties(rsmd, props);
+            int[] columnToProperty = this.mapColumnsToProperties(rsmd, props, type);
 
             do {
                 results.add(this.createBean(rs, type, props, columnToProperty));
@@ -94,9 +100,9 @@ public class MyBeanProcessor extends BeanProcessor {
         return bean;
     }
 
-    private void callSetter(Object target, PropertyDescriptor prop, Object value) throws SQLException {
+    protected void callSetter(Object target, PropertyDescriptor prop, Object value) throws SQLException {
         Method setter = this.getWriteMethod(target, prop, value);
-        DefaultType type = checkForAnnotation(target, prop.getName());
+        DefaultType type = checkDefaultAnnotation(target, prop.getName());
         if (setter != null && setter.getParameterTypes().length == 1 && checkDefaultCondition(type, value)) {
             try {
                 Class<?> firstParam = setter.getParameterTypes()[0];
@@ -147,7 +153,7 @@ public class MyBeanProcessor extends BeanProcessor {
         }
     }
 
-    private DefaultType checkForAnnotation(Object target, String filedName) {
+    private DefaultType checkDefaultAnnotation(Object target, String filedName) {
         try {
             Field field = target.getClass().getDeclaredField(filedName);
             boolean isAnnotated = field.isAnnotationPresent(Default.class);
@@ -160,8 +166,53 @@ public class MyBeanProcessor extends BeanProcessor {
         }
     }
 
+
+    protected int[] mapColumnsToProperties(ResultSetMetaData rsmd, PropertyDescriptor[] props, Class clazz) throws SQLException {
+        int cols = rsmd.getColumnCount();
+        int[] columnToProperty = new int[cols + 1];
+        Arrays.fill(columnToProperty, -1);
+
+        Map<String, String> fieldsWithAnnotation = null;
+
+        for(int col = 1; col <= cols; ++col) {
+            String columnName = rsmd.getColumnLabel(col);
+            if (null == columnName || 0 == columnName.length()) {
+                columnName = rsmd.getColumnName(col);
+            }
+
+
+            String propertyName = columnToPropertyOverrides != null ? this.columnToPropertyOverrides.get(columnName) : null;
+            if (propertyName == null) {
+                if (fieldsWithAnnotation == null) {
+                    fieldsWithAnnotation = findFieldsWithAnnotation(clazz);
+                }
+                propertyName = Optional.ofNullable(fieldsWithAnnotation.get(columnName)).orElse(columnName);
+            }
+
+            for(int i = 0; i < props.length; ++i) {
+                if (propertyName.equalsIgnoreCase(props[i].getName())) {
+                    columnToProperty[col] = i;
+                    break;
+                }
+            }
+        }
+
+        return columnToProperty;
+    }
+
     private boolean checkDefaultCondition(DefaultType type, Object value) {
         return type == null || (type == DefaultType.IFNULL && value != null);
+    }
+
+    /**
+     * Найти все поля с аннотацией @ColumnName и сформировать Map с key - колонка в БД, value - поле класса
+     * @param clazz Entity класс
+     * @return Map с парами key - колонка в БД, value - поле класса. Если полей с аннотацией @ColumnName нет, то вернется
+     * пустая Map
+     */
+    private Map<String, String> findFieldsWithAnnotation(Class clazz) {
+        return Arrays.stream(clazz.getDeclaredFields()).filter(f -> f.isAnnotationPresent(ColumnName.class)).
+                collect(Collectors.toMap(f -> f.getAnnotation(ColumnName.class).key(), Field::getName));
     }
 
     static {
