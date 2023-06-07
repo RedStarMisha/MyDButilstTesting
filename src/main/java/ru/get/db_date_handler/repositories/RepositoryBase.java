@@ -37,32 +37,46 @@ public abstract class RepositoryBase<T> implements Repository<T> {
         dbConnection = connection;
     }
 
-    @Override
+    /**
+     * Получить единичный объект
+     * @param sql
+     * @return
+     */
     public T execute(String sql) throws SQLException {
         return execute(sql, beanHandler);
     }
 
-    @Override
+    /**
+     * Получить Map<String, T> обектов. В случае если T - сущность, то результаты будут представлены в виде пар: id в БД - сущность.
+     * В другом случае будет получена строка из БД в виде пар: название колонки - значение колонки. Если результатом запроса
+     * к БД будет более чем одна строка, то вернется Map<String, T> из первой, где key - имя колонки
+     * @param sql запрос в БД
+     * @return Map<String, T> для сущностей в формате id - entity, в остальных случаях в формате columnName - value
+     */
     public Map<String, T> executeMap(String sql) throws SQLException {
         return execute(sql, mapHandler);
     }
 
-    @Override
+    /**
+     * Получить список объектов
+     * @param sql
+     * @return
+     */
     public List<T> executeList(String sql) throws SQLException {
         return execute(sql, listHandler);
     }
 
-//    public List<Map<String, T>> executeMapList(String sql) {
-//        try {
-//            if (mapListHandler == null) {
-//                throw new Exception("mapListHandler не задан");
-//            }
-//            return execute(sql, mapListHandler);
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
-//        return null;
-//    }
+    protected List<Map<String, T>> executeMapList(String sql) {
+        try {
+            if (mapListHandler == null) {
+                throw new Exception("mapListHandler не задан");
+            }
+            return execute(sql, mapListHandler);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
 
     /**
      * Выполнить sql запрос к КБ и оставить соединение открытым

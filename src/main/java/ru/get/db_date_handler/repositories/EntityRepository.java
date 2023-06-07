@@ -9,6 +9,8 @@ import org.apache.commons.dbutils.handlers.BeanMapHandler;
 import ru.get.db_date_handler.DBConnection;
 import ru.get.db_date_handler.handlers.MyBeanProcessor;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class EntityRepository<T> extends RepositoryBase<T> {
@@ -21,4 +23,18 @@ public class EntityRepository<T> extends RepositoryBase<T> {
         listHandler = new BeanListHandler<>(clazz, rowProcessor);
     }
 
+    @Override
+    public T execute(String sql) throws SQLException {
+        return super.execute(sql);
+    }
+
+    @Override
+    public Map<String, T> executeMap(String sql) throws SQLException {
+        return super.executeMap(sql);
+    }
+
+    @Override
+    public List<T> executeList(String sql) throws SQLException {
+        return super.executeList(sql);
+    }
 }

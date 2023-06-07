@@ -1,10 +1,14 @@
 package ru.get;
 
+import ru.get.db_date_handler.DBConnection;
 import ru.get.db_date_handler.DBManager;
 import ru.get.db_date_handler.PropUtil;
 import ru.get.db_date_handler.columbtofiled.ColumnToFieldFactory;
+import ru.get.db_date_handler.entity.AnaSig;
 import ru.get.db_date_handler.entity.BinSig;
+import ru.get.db_date_handler.repositories.Line;
 import ru.get.db_date_handler.repositories.Repository;
+import ru.get.db_date_handler.repositories.RepositoryBase;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,9 +37,14 @@ public class Main {
 
         String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.USERID='" + UserID + "'";
 //        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.GROUPID <> 'ADMINISTRATORS'";
-
-        String GroupID = DBManager.getRepository().getString (sql, "GROUPID");
-        int CategoryMap = DBManager.getRepository().getInt (sql,"CATEGORYMAP");
+        Line line;
+        try {
+            line = DBManager.getRepository().executeLine(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String GroupID = line.getString("GROUPID");
+        double CategoryMap = line.getDouble("CATEGORYMAP");
         System.out.println(GroupID + " " + CategoryMap);
     }
 
@@ -49,7 +58,7 @@ public class Main {
                 + "FROM `pls_bin_conf` LEFT OUTER JOIN `pls_station` ON `pls_station`.`STATIONNR`=`pls_bin_conf`.`STATIONNR` "
                 + "LEFT OUTER JOIN `pls_proc_categories` ON `pls_proc_categories`.`CATEGORYNR` = `pls_bin_conf`.`PROCCATNR` "
                 + "ORDER BY `pls_station`.`STATIONID` LIMIT 20;";
-        Repository<BinSig> rep = DBManager.getRepository(BinSig.class);
+        RepositoryBase<BinSig> rep = DBManager.getRepository(BinSig.class);
         Map<String, BinSig> binSigMap = null;
         try {
             binSigMap = rep.executeMap(sql);

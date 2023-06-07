@@ -58,14 +58,14 @@ public class DBManager {
      * @return репозиторий для получения Entity из БД
      * @param <T>
      */
-    public static <T>Repository getRepository(Class<T> clazz) {
+    public static <T>RepositoryBase<T> getRepository(Class<T> clazz) {
         return new EntityRepository<>(connection, clazz, columnToField.getMatching(clazz));
     }
     /**
      * Вернуть Repository предназначенного для получения данных из БД представленных классом Object
      * @return
      */
-    public static PrimitiveRepository getRepository() {
-        return new PrimitiveRepository(connection);
+    public static RepositoryPrimitive getRepository() {
+        return new RepositoryPrimitive(connection);
     }
 }
