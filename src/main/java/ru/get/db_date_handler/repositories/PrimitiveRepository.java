@@ -5,8 +5,12 @@ import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import ru.get.db_date_handler.DBConnection;
+import ru.get.db_date_handler.HandlerException;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -58,5 +62,17 @@ public class PrimitiveRepository extends RepositoryBase<Object> {
             System.err.println("Тип значение колонки " + columnName + " не является Double");
         }
         return val;
+    }
+
+    public List<Line> executeListResult(String sql) throws SQLException {
+        try {
+            if (mapListHandler == null) {
+                throw new HandlerException("mapListHandler");
+            }
+            return execute(sql, mapListHandler).stream().map(Line::new).toList();
+        } catch (HandlerException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 }

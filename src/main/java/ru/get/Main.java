@@ -31,8 +31,8 @@ public class Main {
     private static void getPrimitive() {
         String UserID = "ADMINISTRATOR";
 
-//        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.USERID='" + UserID + "'";
-        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.GROUPID <> 'ADMINISTRATORS'";
+        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.USERID='" + UserID + "'";
+//        String sql = "SELECT g.GROUPID, g.CATEGORYMAP FROM pls_usergroups g JOIN pls_users u ON g.GROUPNR=u.GROUPNR WHERE u.GROUPID <> 'ADMINISTRATORS'";
 
         String GroupID = DBManager.getRepository().getString (sql, "GROUPID");
         int CategoryMap = DBManager.getRepository().getInt (sql,"CATEGORYMAP");

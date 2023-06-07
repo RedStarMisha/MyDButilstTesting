@@ -52,17 +52,17 @@ public abstract class RepositoryBase<T> implements Repository<T> {
         return execute(sql, listHandler);
     }
 
-    public List<Map<String, T>> executeMapList(String sql) {
-        try {
-            if (mapListHandler == null) {
-                throw new Exception("mapListHandler не задан");
-            }
-            return execute(sql, mapListHandler);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
-    }
+//    public List<Map<String, T>> executeMapList(String sql) {
+//        try {
+//            if (mapListHandler == null) {
+//                throw new Exception("mapListHandler не задан");
+//            }
+//            return execute(sql, mapListHandler);
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return null;
+//    }
 
     /**
      * Выполнить sql запрос к КБ и оставить соединение открытым
