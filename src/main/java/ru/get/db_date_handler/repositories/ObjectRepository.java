@@ -25,7 +25,7 @@ public class ObjectRepository extends RepositoryBase<Object> {
     }
 
     @Override
-    public List<Map<String, Object>> executeMapList(String sql) {
+    public List<Map<String, Object>> executeMapList(String sql) throws SQLException {
         return super.executeMapList(sql);
     }
 }

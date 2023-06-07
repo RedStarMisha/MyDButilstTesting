@@ -3,6 +3,7 @@ package ru.get.db_date_handler.repositories;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import ru.get.db_date_handler.DBConnection;
+import ru.get.db_date_handler.HandlerException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -66,13 +67,13 @@ public abstract class RepositoryBase<T> implements Repository<T> {
         return execute(sql, listHandler);
     }
 
-    protected List<Map<String, T>> executeMapList(String sql) {
+    protected List<Map<String, T>> executeMapList(String sql) throws SQLException {
         try {
             if (mapListHandler == null) {
-                throw new Exception("mapListHandler не задан");
+                throw new HandlerException("mapListHandler не задан");
             }
             return execute(sql, mapListHandler);
-        } catch (Exception e) {
+        } catch (HandlerException e) {
             System.err.println(e.getMessage());
         }
         return null;

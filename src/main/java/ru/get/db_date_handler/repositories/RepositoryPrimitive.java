@@ -12,7 +12,7 @@ public class RepositoryPrimitive {
         this.repository = new ObjectRepository(connection);
     }
 
-    public List<Line> executeList(String sql) {
+    public List<Line> executeList(String sql) throws SQLException {
         return repository.executeMapList(sql).stream().map(Line::new).toList();
     }
     public Line executeLine(String sql) throws SQLException {

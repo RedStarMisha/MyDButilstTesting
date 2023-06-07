@@ -3,7 +3,6 @@ package ru.get.db_date_handler.repositories;
 import com.sun.jdi.InvalidTypeException;
 
 import java.util.Map;
-import java.util.Optional;
 
 public class Line {
     private Map<String, Object> line;
@@ -25,8 +24,8 @@ public class Line {
     }
     public int getInt(String name) {
         Object res = line.get(name);
-        if (res instanceof Integer d) {
-            return d;
+        if (res instanceof Number) {
+            return (Integer) res;
         }
         try {
             throw new InvalidTypeException("Integer");
@@ -37,8 +36,8 @@ public class Line {
     }
     public double getDouble(String name) {
         Object res = line.get(name);
-        if (res instanceof Double d) {
-            return d;
+        if (res instanceof Number) {
+            return (Double) res;
         }
         try {
             throw new InvalidTypeException("Double");
